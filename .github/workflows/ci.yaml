@@ -12,6 +12,7 @@ jobs:
   build:
     strategy:      
       matrix:
+        platforms: ["linux/amd64", "linux/arm64", "linux/amd64,linux/arm64"]
         builder_type: [local, cloud]
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +23,7 @@ jobs:
         uses: ./.github/actions/buildpush
         with:
           builder_type: ${{ matrix.builder_type }}
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platforms }}
           docker_username: ${{ vars.DOCKER_USERNAME }}
           docker_password: ${{ secrets.DOCKER_PASSWORD }}
           docker_hub_account: ${{ vars.DOCKER_HUB_ACCOUNT }}
